@@ -2,7 +2,6 @@ import requests
 import pandas as pd
 
 # Read Data
-
 url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DA0321EN-SkillsNetwork/LargeData/m1_survey_data.csv"
 
 response = requests.get(url)
@@ -29,9 +28,13 @@ remove_duplicate = df.drop_duplicates()
 removed_duplicate = remove_duplicate.duplicated().sum()
 print(f"Total of duplicate rows after removal: {removed_duplicate}")
 
+remaining_rows = len(remove_duplicate)
+print(f"Total rows without duplicates: {remaining_rows}")
+
 # Finding missing values
 missing_value = df.isnull().sum()
 print(f"Total missing value: {missing_value}")
+
 
 # Imputing missing values
 if 'WorkLoc' in df.columns:
@@ -76,3 +79,13 @@ if 'CompTotal' in df.columns and 'CompFreq' in df.columns:
     print(df[['CompFreq', 'CompTotal', 'NormalizedAnnualCompensation']].head())
 else:
     print("Required columns ('CompFreq' or 'CompTotal') not found in the dataset.")
+
+
+if 'CompFreq' in df.columns:
+    unique_values_compfreq = df['CompFreq'].nunique()
+    print(f"Number of unique values in the 'CompFreq' column: {unique_values_compfreq}")
+else:
+    print("'CompFreq' column not found.")
+
+
+
